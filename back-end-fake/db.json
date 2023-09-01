@@ -1,0 +1,41 @@
+{
+    "workSpaces":[
+        {
+            "img":"../../images/avartar.png",
+            "id":"1",
+            "nameWorkSpace":"aa"
+        },
+        {
+            "img":"../../images/avartar.png",
+            "id":"2",
+            "nameWorkSpace":"bb"
+        },
+        {
+            "img":"/../../images/avartar.png",
+            "id":"3",
+            "nameWorkSpace":"cc"
+        },
+        {
+            "img":"/../../images/avartar.png",
+            "id":"4",
+            "nameWorkSpace":"dd"
+        }
+    ],
+    "boards":[
+      {
+        "img":"/../../images/avartar.png",
+        "id":4,
+        "name":"dd",   
+        "isFavorite": true,
+        "isTemplate":true
+    },
+    {
+      "img":"/../../images/avartar.png",
+      "id":5,
+      "name":"dd",   
+      "isFavorite": true,
+      "isTemplate":true
+  }
+    ]
+   
+}
