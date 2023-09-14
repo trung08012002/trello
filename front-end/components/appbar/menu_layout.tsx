@@ -7,7 +7,7 @@ import { title } from "process";
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { CustomGlobalStyle } from "../styles/customGlobalStyle";
-import { MenuButtonIconContext } from "./menuButtonIcon";
+import { MenuButtonContext } from "./menuButtonIcon";
 type Props = {
     children: ReactNode,
     title?: string,
@@ -18,7 +18,7 @@ type Props = {
 
 
 const MenuLayout = ({ children, title, handleBack }: Props) => {
-    const context = useContext(MenuButtonIconContext);
+    const context = useContext(MenuButtonContext);
 
     const open = context?.open || false
     const handleClose = context?.handleClose

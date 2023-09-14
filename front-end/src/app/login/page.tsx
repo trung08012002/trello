@@ -17,10 +17,10 @@ const LoginPage = () => {
             const res = await axiosClient.post('/users/login', { ...payload });
 
             if (res.status === 200) {
-
-
+                const { accessToken, refreshToken, ...newData } = res.data;
+                localStorage.setItem('refreshToken', refreshToken)
+                localStorage.setItem('inforUser', JSON.stringify(newData))
                 router.push('/boards');
-
             }
 
         }

@@ -1,22 +1,28 @@
-"use client"
-import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
-import React, { ReactNode, useState, createContext } from "react"
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { CustomGlobalStyle } from "../styles/customGlobalStyle";
+"use client";
+import {
+    IconButton,
+    IconButtonProps,
+
+} from "@mui/material";
+import React, { ReactNode, createContext } from "react";
+
+
 
 type Props = {
-    icon: ReactNode,
-    children: ReactNode,
-    onClose?: () => void
-}
+    icon: ReactNode;
+    children: ReactNode;
+    onClose?: () => void;
+} & IconButtonProps;
 interface OpenContext {
-    open: boolean,
-    handleClose: () => void,
-    anchorEl: null | HTMLElement
+    open: boolean;
+    handleClose: () => void;
+    anchorEl: null | HTMLElement;
 }
-export const MenuButtonIconContext = createContext<OpenContext | undefined>(undefined);
+export const MenuButtonContext = createContext<OpenContext | undefined>(
+    undefined
+);
 
-const MenuButtonIcon = ({ icon, children, onClose }: Props) => {
+const MenuButtonIcon = ({ icon, children, onClose, ...restButton }: Props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -24,37 +30,14 @@ const MenuButtonIcon = ({ icon, children, onClose }: Props) => {
     };
     const handleClose = () => {
         setAnchorEl(null);
-        onClose?.()
+        onClose?.();
     };
     return (
-        <MenuButtonIconContext.Provider value={{ open, handleClose, anchorEl }}>
-
-            <Button onClick={handleClick}
-
-                style={{ width: "fit-content" }}
-                sx={{
-                    height: 30,
-
-                    zIndex: 1000,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    "&.MuiButtonBase-root,.MuiButton-root,.css-1e6y48t-MuiButtonBase-root-MuiButton-root": {
-                        padding: 0,
-
-                    }
-                }}>
-
-                {icon}
-
-            </Button>
-            {
-                children
-            }
-
-
-        </MenuButtonIconContext.Provider>
-    )
+        <MenuButtonContext.Provider value={{ open, handleClose, anchorEl }}>
+            <IconButton onClick={handleClick} {...restButton} >{icon}</IconButton>
+            {children}
+        </MenuButtonContext.Provider>
+    );
 };
 
 export default MenuButtonIcon;

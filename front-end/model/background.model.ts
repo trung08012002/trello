@@ -1,14 +1,12 @@
-import { ObjectId } from "mongodb";
-
 interface IBackground {
-  _id?: ObjectId;
+  _id?: string;
   type: number;
   url?: string;
   backgroundColor?: string;
 }
 
 class Background {
-  _id?: ObjectId;
+  _id?: string;
   type: number;
   url: string;
   backgroundColor: string;

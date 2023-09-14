@@ -8,18 +8,21 @@ const LayoutNabar = ({ children }: { children: ReactNode }) => {
   const theme = useTheme();
 
   return (
-    <AppBar sx={{ height: () => themeOptions.trello.appBarHeight, backgroundColor: theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0' }}>
-      <Toolbar
-        style={{ minHeight: themeOptions.trello.appBarHeight }}
-        sx={{
+    <>
+      <AppBar sx={{ height: () => themeOptions.trello.appBarHeight, position: "fixed", backgroundColor: theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0', zIndex: 10000000, }}>
+        <Toolbar
+          style={{ minHeight: themeOptions.trello.appBarHeight }}
+          sx={{
 
-          "&.MuiToolbar-regular": {
-            padding: 0
-          }
-        }}>
-        {children}
-      </Toolbar>
-    </AppBar>
+            "&.MuiToolbar-regular": {
+              padding: 0
+            }
+          }}>
+          {children}
+        </Toolbar>
+      </AppBar>
+
+    </>
   )
 };
 

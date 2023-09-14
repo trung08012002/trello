@@ -41,7 +41,7 @@ const BoardBar = ({ favorite, visibility }: BoardBarProp) => {
 
 
     return (
-        <Box sx={{ width: "100%", height: "100%" }} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+        <Box sx={{ width: "100%", height: "100%" }} display={"flex"} alignItems={"center"} justifyContent={"space-between"} paddingLeft={"20px"}>
             <Box>
                 <AutoSizeTextField size="small" sx={{ padding: 0, border: 'none' }} textDefault="pbl5" onBlur={() => { }} />
                 <StartButton favorite={favorite} />
@@ -104,12 +104,13 @@ const BoardBar = ({ favorite, visibility }: BoardBarProp) => {
             <Box display={"flex"}>
                 <Button variant="outlined" startIcon={<PersonAddIcon />}>Invite</Button>
                 <AvatarGroup max={7} sx={{
-                    '& .MuiAvatar-roor': {
-                        width: 34,
-                        height: 34,
+                    '& .MuiAvatar-root': {
+                        width: 40,
+                        height: 40,
                         fontSize: 16, border: 'none', color: 'white', cursor: 'pointer', '&:first-of-type': {
                             bgColor: '#a4b0be'
-                        }
+                        },
+
                     }
                 }}>
                     <Tooltip title="avatar">

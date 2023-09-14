@@ -34,7 +34,8 @@
       ],
       "@/public/*":[
         "./public/*"
-      ]
+      ],
+      "@/api/*":["./src/api-client/*"]
 
     }
   },

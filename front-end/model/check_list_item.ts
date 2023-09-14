@@ -1,12 +1,10 @@
-import { ObjectId } from "mongodb";
-
 interface CheckListItemInterface {
-  _id?: ObjectId;
+  _id?: string;
   text: string;
   completed?: boolean;
 }
 class CheckListItem {
-  _id?: ObjectId;
+  _id?: string;
   text: string;
   completed: boolean;
   constructor({ _id, text, completed }: CheckListItemInterface) {
