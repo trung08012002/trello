@@ -1,23 +1,24 @@
-import { ObjectId } from "mongodb";
 import CardInfor from "./card_infor.model";
 
 interface ColumnInforProps {
-  _id?: ObjectId;
+  _id?: string;
   name?: string;
-  position?: number;
+
   cards?: CardInfor[];
+  cardOrderIds?: string[];
 }
 
 class ColumnInfor {
-  _id?: ObjectId;
+  _id?: string;
   name: string;
-  position: number;
   cards: CardInfor[];
-  constructor({ _id, name, position, cards }: ColumnInforProps) {
+  cardOrderIds: string[];
+  constructor({ _id, name, cards, cardOrderIds }: ColumnInforProps) {
     this._id = _id;
     this.name = name || "";
-    this.position = position || 0;
+
     this.cards = cards || [];
+    this.cardOrderIds = cardOrderIds || [];
   }
 }
 

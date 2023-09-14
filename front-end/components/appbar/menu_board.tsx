@@ -9,14 +9,11 @@ import ItemBoard from "./item_board";
 import NoItems from "./noItems";
 
 import axiosClient from "@/app/api/axiosClient";
+import customFetcher from "@/app/utils/fetch_instance";
 const MenuBoard = () => {
   async function getBoards(): Promise<Board[]> {
 
-    const data = await axiosClient.get(`/boards`)
-
-
-    console.log("data :" + data.data.data)
-    return data.data.data as unknown as Board[];
+    return customFetcher({ url: `/boards`, config: {} })
   }
   const [boards, setBoards] = useState<Board[]>([]);
   useEffect(() => {

@@ -14,14 +14,14 @@ const InputField = ({ name, control, label, type,
     ref: externalRef,
     value: externalValue,
     ...rest }: InputFieldProps) => {
-    const { field: { onChange, onBlur, value, ref
+    const { field: { onChange, onBlur, value, ref,
     }, fieldState: { error } } = useController({ name, control })
     return (
         <TextField
             fullWidth
             type={type}
- 
-           
+
+
             margin="dense"
             sx={{
                 '& label.Mui-focused': {

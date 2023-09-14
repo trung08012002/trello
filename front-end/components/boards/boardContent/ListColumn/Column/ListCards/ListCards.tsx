@@ -1,16 +1,25 @@
 "use client"
 import { themeOptions } from "@/app/them";
-import { Box } from "@mui/material";
-import React from "react"
+import { Box, Button, Card, IconButton } from "@mui/material";
+import React, { useEffect } from "react"
 import CardItem from "./Card/card_item";
-import CardInfor from "model/card_infor.model";
+import CardInfor, { CardInforView } from "model/card_infor.model";
 import { COLUMN_HEADER_HEIGHT, COLUMN_FOOTER_HEIGHT } from "../../../board_content";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { UniqueIdentifier } from "@dnd-kit/core";
+import CustomInput from "../customInput";
+import { cardApi } from "src/api-client/card-api";
+import AddItem from "./add_item";
 
 
-const ListCards = ({ listCard }: { listCard: Array<CardInfor> }) => {
+
+
+const ListCards = ({ listCard, idColumn, add, setAdd }: { listCard: Array<CardInfor>, idColumn: string, add: boolean, setAdd: React.Dispatch<React.SetStateAction<boolean>> }) => {
+
     return (
-        <SortableContext items={listCard.map((card) => card._id)} strategy={verticalListSortingStrategy}>
+        <SortableContext items={
+
+            listCard.map((card) => card._id!)} strategy={verticalListSortingStrategy}>
 
 
             <Box
@@ -46,8 +55,15 @@ const ListCards = ({ listCard }: { listCard: Array<CardInfor> }) => {
                     },
 
                 }}>
+
                 {
-                    listCard.map((e, index) => <CardItem key={index} card={{ ...e, visible: false }} />)
+
+                    listCard.map((e, index) =>
+
+                        <CardItem key={index} card={{ ...e, visible: false }} />)
+                }
+                {
+                    add ? <AddItem id={idColumn} setAdd={setAdd} /> : null
                 }
             </Box>
         </SortableContext>

@@ -1,8 +1,8 @@
-import { ObjectId } from "mongodb";
+import LabelModel from "./Label.model";
 import CheckList from "./check_list";
 
 interface CardInforProps {
-  _id?: ObjectId;
+  _id?: string;
   title?: string;
   members?: any[];
   description?: string;
@@ -10,27 +10,30 @@ interface CardInforProps {
   acrhived?: boolean;
   checkLists?: Array<CheckList>;
   comments?: Array<any>;
-  labels?: Array<any>;
+  labels?: Array<LabelModel>;
+  shownLabels?: Array<LabelModel>;
   cover?: string;
   startDate?: Date;
-  attachments: Array<any>;
-
+  visible?: boolean;
+  attachments?: Array<any>;
+  fe_placeholder?: boolean;
 }
 class CardInfor {
-  _id?: ObjectId;
+  _id?: string;
   title: string;
   members: any[];
   checkLists: Array<CheckList>;
   description: string;
   dueDate: Date;
-
+  shownLabels: Array<LabelModel>;
   comments: Array<any>;
   acrhived: boolean;
   labels: Array<any>;
   cover: string;
   startDate: Date;
+  visible: boolean;
   attachments: Array<any>;
-
+  fe_placeholder?: boolean;
   constructor({
     _id,
     title,
@@ -44,7 +47,9 @@ class CardInfor {
     startDate,
     attachments,
     description,
-
+    fe_placeholder,
+    shownLabels,
+    visible,
   }: CardInforProps) {
     this._id = _id;
     this.title = title || "";
@@ -58,7 +63,9 @@ class CardInfor {
     this.startDate = startDate || new Date();
     this.attachments = attachments || [];
     this.description = description || "";
-   
+    this.fe_placeholder = fe_placeholder ?? false;
+    this.shownLabels = shownLabels || [];
+    this.visible = visible || false;
   }
 }
 interface ICardInforView extends CardInforProps {
@@ -66,6 +73,7 @@ interface ICardInforView extends CardInforProps {
 }
 class CardInforView extends CardInfor {
   visible: boolean;
+
   constructor({
     _id,
     title,
@@ -92,7 +100,7 @@ class CardInforView extends CardInfor {
       comments,
       cover,
       startDate,
-      attachments,   
+      attachments,
       description,
     });
     this.visible = visible ?? false;

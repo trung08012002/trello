@@ -21,9 +21,7 @@ type workSpace = {
 
 async function getWorkSpaces(): Promise<workSpace[]> {
 
-  const data = await axiosClient.get(`/workSpaces`)
-
-  return data.data as unknown as workSpace[];
+  return customFetcher({ url: `/workSpaces`, config: {} })
 }
 
 const MenuWorkSpace = () => {

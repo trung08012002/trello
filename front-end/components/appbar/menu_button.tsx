@@ -1,5 +1,5 @@
 "use client"
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, ButtonProps, IconProps, SxProps, Typography, TypographyProps } from "@mui/material";
 
 import React, { ReactNode, createContext } from "react"
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -7,8 +7,10 @@ import { CustomGlobalStyle } from "../styles/customGlobalStyle";
 
 type Props = {
   title: string,
-  children: ReactNode
-}
+  children: ReactNode,
+  styleIcon?: React.CSSProperties,
+  styleButton?: ButtonProps
+} & TypographyProps
 interface OpenContext {
   open: boolean,
   handleClose: () => void,
@@ -16,7 +18,7 @@ interface OpenContext {
 }
 export const ParentContext = createContext<OpenContext | undefined>(undefined);
 
-const MenuButton = ({ title, children }: Props) => {
+const MenuButton = ({ title, children, styleIcon = { color: "white" }, styleButton = { style: { marginLeft: 2 } }, ...rest }: Props) => {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -26,13 +28,17 @@ const MenuButton = ({ title, children }: Props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  let { sx } = { ...rest }
+  if (sx == null) {
+    sx = CustomGlobalStyle.text14white
+  }
   return (
     <ParentContext.Provider value={{ open, handleClose, anchorEl }}>
       <Box>
-        <Button onClick={handleClick} sx={{ ml: 2 }}>
+        <Button onClick={handleClick} {...styleButton} >
           <Box display="flex" alignItems={"center"} >
-            <Typography sx={CustomGlobalStyle.text14white}>{title}</Typography>
-            <KeyboardArrowDownIcon style={{ color: "white", }} />
+            <Typography sx={sx}>{title}</Typography>
+            <KeyboardArrowDownIcon style={styleIcon} />
           </Box>
         </Button>
         {

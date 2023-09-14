@@ -3,6 +3,7 @@ import Background from "model/background.model";
 import Board from "model/board.model";
 import ColumnInfor from "model/column_infor.model";
 import UserMinimize from "model/userMinimize";
+import WorkSpaceMinimize from "model/workSpaceMinimize.model";
 
 const initialState = {
   search: "",
@@ -11,6 +12,10 @@ const initialState = {
   members: new Array<UserMinimize>(),
   favorite: false,
   background: new Background({ type: 0 }),
+  workSpaceName: "",
+  workSpaceId: "",
+  boardOfWorkSpace: new Array<Partial<Board>>(),
+  backgroundWorkSpace: "",
 };
 
 const boardSlice = createSlice({
@@ -20,8 +25,11 @@ const boardSlice = createSlice({
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
     },
-    setBoard: (state, action: PayloadAction<Board>) => {
-      console.log("board", action.payload);
+    setBoard: (state, action: PayloadAction<Board & WorkSpaceMinimize>) => {
+      state.workSpaceId = action.payload._id;
+      state.boardOfWorkSpace = action.payload.boardOfWorkSpace;
+      state.workSpaceName = action.payload.workSpaceName;
+      state.backgroundWorkSpace = action.payload.backgroundWorkSpace;
       state.background = action.payload.background;
       state.columns = action.payload.columnInfor;
       state.favorite = action.payload.favorite;

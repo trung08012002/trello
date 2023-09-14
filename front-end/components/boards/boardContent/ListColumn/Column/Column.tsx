@@ -1,18 +1,19 @@
 "use client"
 
 import ListActions from "@/components/boards/list_actions";
-import { Typography, Button, Tooltip } from "@mui/material";
+import { Typography, } from "@mui/material";
 import Box from "@mui/material/Box/Box";
-import React from "react"
+import React, { useContext, useState } from "react"
 
-import AddIcon from '@mui/icons-material/Add';
-import DragHandleIcon from '@mui/icons-material/DragHandle';
+
+
 import ListCards from "./ListCards/ListCards";
 import ColumnInfor from "model/column_infor.model";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from '@dnd-kit/utilities';
-import { COLUMN_FOOTER_HEIGHT, COLUMN_HEADER_HEIGHT } from "../../board_content";
-import { defaultDropAnimationSideEffects } from "@dnd-kit/core";
+import { BoardContext, COLUMN_FOOTER_HEIGHT, COLUMN_HEADER_HEIGHT } from "../../board_content";
+import FootColumn from "./foot_column";
+
 const Column = ({ column }: { column: ColumnInfor }) => {
     const {
         attributes,
@@ -31,7 +32,7 @@ const Column = ({ column }: { column: ColumnInfor }) => {
 
 
     };
-
+    const [add, setAdd] = useState(false);
     return (
         <div ref={setNodeRef}
             style={DndkitColumnStyle}
@@ -41,7 +42,7 @@ const Column = ({ column }: { column: ColumnInfor }) => {
                 sx={{
                     width: '300px',
                     borderRadius: "10px",
-                    padding: "10px 0px 10px 10px",
+
 
                     backgroundColor: (theme) => {
 
@@ -57,16 +58,21 @@ const Column = ({ column }: { column: ColumnInfor }) => {
                 }}><Typography>{column.name}</Typography>
                     <ListActions />
                 </Box>
-                <ListCards listCard={column.cards} />
+                <ListCards listCard={column.cards} idColumn={column._id || ""} add={add} setAdd={setAdd} />
 
-                <Box height={COLUMN_FOOTER_HEIGHT} display={"flex"} alignItems={"center"} justifyContent={"space-between"}><Button fullWidth={true}
-                    style={{ justifyContent: "flex-start" }} startIcon={<AddIcon />}>Add a card</Button><Tooltip title="Drag to move">
-                        <DragHandleIcon sx={{ cursor: 'pointer' }} />
-                    </Tooltip></Box>
+                {add ? null :
+                    <Box sx={{
+                        p: '0 5px',
+                        m: '0 5px',
+                    }} minHeight={COLUMN_FOOTER_HEIGHT}
+
+                    >
+                        <FootColumn setAdd={setAdd} />
+                    </Box>
+                }
 
             </Box>
         </div>
     )
-};
-
-export default Column;
+}
+export default Column

@@ -8,22 +8,29 @@ import BoardLayout from "@/components/boards/boardLayout";
 
 
 import React, { useEffect, useState } from "react"
-import { store } from "src/redux/store";
+import { RootState, store } from "src/redux/store";
 import { setBoard } from "src/redux/features/board_reducer";
 
 import axiosClient from "@/app/api/axiosClient";
 import BoardContent from "@/components/boards/boardContent/board_content";
 import Board from "model/board.model";
 import customFetcher from "@/app/utils/fetch_instance";
+import CardInfor from "model/card_infor.model";
+import { useDispatch, useSelector } from "react-redux";
+import WorkSpaceMinimize from "model/workSpaceMinimize.model";
 
 async function fetchDataBoard(id: string) {
-    customFetcher()
+
     try {
-        const data = await axiosClient.get(`/boards/${id}`)
+        const data: Board & WorkSpaceMinimize = await customFetcher({ url: `/boards/${id}`, config: {} })
 
 
+        data.columnInfor.forEach((column) => {
+            column.cards.unshift(new CardInfor({ _id: `${column._id}Place_holder_view`, fe_placeholder: true }))
+            column.cardOrderIds.unshift(`${column._id}Place_holder_view`)
+        })
 
-        return data.data.data;
+        return data;
     }
     catch (err) {
         console.log(err)
@@ -35,12 +42,16 @@ async function fetchDataBoard(id: string) {
 
 
 function PageBoardDetail({ params }: { params: { id: string } }) {
-    const [boardPageDetail, setboardPageDetail] = useState<Board>(new Board({}))
+    const dispatch = useDispatch();
+    const board = useSelector((state: RootState) => state.board)
     useEffect(() => {
+
         fetchDataBoard(params.id).then((data) => {
 
-            setboardPageDetail(data)
+            if (data) {
+                dispatch(setBoard(data));
 
+            }
         })
     }, [params.id])
 
@@ -48,8 +59,8 @@ function PageBoardDetail({ params }: { params: { id: string } }) {
     return (
         <>
             <BoardLayout boardBar={<BoardBar
-                favorite={boardPageDetail.favorite} visibility={boardPageDetail.visibility}
-            />} boardContainer={<BoardContent columns={boardPageDetail.columnInfor} background={boardPageDetail.background} />} />
+                favorite={board.favorite} visibility={board.visibility}
+            />} boardContainer={<BoardContent columns={board.columns} background={board.background} />} />
         </>
 
     )

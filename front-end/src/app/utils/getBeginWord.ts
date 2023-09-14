@@ -2,15 +2,12 @@ const getBeginWordUppercase = (value: string) => {
   value = value.trim();
   let firstLetter = "";
   let lastLetter = "";
-  for (let i = 0; i < value.length; i++) {
-    if (value[i] === " ") {
-      if (firstLetter != "") {
-        lastLetter = value[i + 1];
-      } else {
-        firstLetter = value[i];
-      }
-    }
+  const arrayValue = value.split(" ");
+  if (arrayValue.length <= 1) {
+    return value[0];
   }
-  return `${firstLetter.toUpperCase()} ${lastLetter.toUpperCase()}`;
+  firstLetter = value[0];
+  lastLetter = arrayValue.pop()!;
+  return `${firstLetter.toUpperCase()}${lastLetter.toUpperCase()}`;
 };
 export default getBeginWordUppercase;
